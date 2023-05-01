@@ -23,7 +23,24 @@
                     <li>@Html.ActionLink("Vehicle", "Index", "Vehicle", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Booking", "Index", "Booking", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
-                 @Html.Partial("_LoginPartial")
+
+                <ul class="nav navbar-right" style="color:white">
+                    
+                    @if (Session["UserIC"] != null)
+                    {
+                        <h5 style="color:white"> Hello @Session["UserName"]</h5>
+                        
+                        @Html.ActionLink("Log Out", "Logout", "Login")
+                    }
+
+                    else
+                    {
+                        @Html.Partial("_LoginPartial")
+                    }
+
+                </ul>
+
+
             </dixv>
         </div>
     </nav>
