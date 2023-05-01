@@ -1,0 +1,50 @@
+﻿@model Assignment_3_ASP.NET_MVC_CRUD.Models.tb_vehicle
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.v_model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.v_model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.v_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.v_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.v_seat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.v_seat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.v_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.v_price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.v_reg }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

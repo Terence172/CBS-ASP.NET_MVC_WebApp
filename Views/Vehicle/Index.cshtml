@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Assignment_3_ASP.NET_MVC_CRUD.Models.tb_vehicle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.v_model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.v_type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.v_seat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.v_price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.v_model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.v_type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.v_seat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.v_price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.v_reg }) |
+            @Html.ActionLink("Details", "Details", new { id=item.v_reg }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.v_reg })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_cbsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tb_booking">
+          <Key>
+            <PropertyRef Name="b_id" />
+          </Key>
+          <Property Name="b_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="b_bdate" Type="date" Nullable="false" />
+          <Property Name="b_rdate" Type="date" Nullable="false" />
+          <Property Name="b_total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="b_status" Type="int" Nullable="false" />
+          <Property Name="b_customer" Type="int" Nullable="false" />
+          <Property Name="b_vehicle" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_cbs.dbo.tb_state' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tb_state">
+          <Key>
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="state" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="u_ic" />
+          </Key>
+          <Property Name="u_ic" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_pass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_address" Type="varchar" MaxLength="100" />
+          <Property Name="u_phone" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_vehicle">
+          <Key>
+            <PropertyRef Name="v_reg" />
+          </Key>
+          <Property Name="v_reg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="v_model" Type="varchar" MaxLength="50" />
+          <Property Name="v_type" Type="varchar" MaxLength="50" />
+          <Property Name="v_seat" Type="int" />
+          <Property Name="v_price" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_tb_booking_tb_user">
+          <End Role="tb_vehicle" Type="Self.tb_vehicle" Multiplicity="1" />
+          <End Role="tb_booking" Type="Self.tb_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_vehicle">
+              <PropertyRef Name="v_reg" />
+            </Principal>
+            <Dependent Role="tb_booking">
+              <PropertyRef Name="b_vehicle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_booking_tb_user1">
+          <End Role="tb_user" Type="Self.tb_user" Multiplicity="1" />
+          <End Role="tb_booking" Type="Self.tb_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_user">
+              <PropertyRef Name="u_ic" />
+            </Principal>
+            <Dependent Role="tb_booking">
+              <PropertyRef Name="b_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_cbsModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_booking" EntityType="Self.tb_booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_user" EntityType="Self.tb_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_vehicle" EntityType="Self.tb_vehicle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_state" EntityType="Self.tb_state" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_state].[state] AS [state]
+    FROM [dbo].[tb_state] AS [tb_state]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tb_booking_tb_user" Association="Self.FK_tb_booking_tb_user">
+            <End Role="tb_vehicle" EntitySet="tb_vehicle" />
+            <End Role="tb_booking" EntitySet="tb_booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_booking_tb_user1" Association="Self.FK_tb_booking_tb_user1">
+            <End Role="tb_user" EntitySet="tb_user" />
+            <End Role="tb_booking" EntitySet="tb_booking" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_cbsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tb_booking">
+          <Key>
+            <PropertyRef Name="b_id" />
+          </Key>
+          <Property Name="b_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="b_bdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="b_rdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="b_total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="b_status" Type="Int32" Nullable="false" />
+          <Property Name="b_customer" Type="Int32" Nullable="false" />
+          <Property Name="b_vehicle" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_vehicle" Relationship="Self.FK_tb_booking_tb_user" FromRole="tb_booking" ToRole="tb_vehicle" />
+          <NavigationProperty Name="tb_user" Relationship="Self.FK_tb_booking_tb_user1" FromRole="tb_booking" ToRole="tb_user" />
+        </EntityType>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="u_ic" />
+          </Key>
+          <Property Name="u_ic" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="u_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_booking" Relationship="Self.FK_tb_booking_tb_user1" FromRole="tb_user" ToRole="tb_booking" />
+        </EntityType>
+        <EntityType Name="tb_vehicle">
+          <Key>
+            <PropertyRef Name="v_reg" />
+          </Key>
+          <Property Name="v_reg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="v_model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="v_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="v_seat" Type="Int32" />
+          <Property Name="v_price" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tb_booking" Relationship="Self.FK_tb_booking_tb_user" FromRole="tb_vehicle" ToRole="tb_booking" />
+        </EntityType>
+        <EntityType Name="tb_state">
+          <Key>
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tb_booking_tb_user">
+          <End Role="tb_vehicle" Type="Self.tb_vehicle" Multiplicity="1" />
+          <End Role="tb_booking" Type="Self.tb_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_vehicle">
+              <PropertyRef Name="v_reg" />
+            </Principal>
+            <Dependent Role="tb_booking">
+              <PropertyRef Name="b_vehicle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_booking_tb_user1">
+          <End Role="tb_user" Type="Self.tb_user" Multiplicity="1" />
+          <End Role="tb_booking" Type="Self.tb_booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_user">
+              <PropertyRef Name="u_ic" />
+            </Principal>
+            <Dependent Role="tb_booking">
+              <PropertyRef Name="b_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_cbsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tb_booking" EntityType="Self.tb_booking" />
+          <EntitySet Name="tb_user" EntityType="Self.tb_user" />
+          <EntitySet Name="tb_vehicle" EntityType="Self.tb_vehicle" />
+          <EntitySet Name="tb_state" EntityType="Self.tb_state" />
+          <AssociationSet Name="FK_tb_booking_tb_user" Association="Self.FK_tb_booking_tb_user">
+            <End Role="tb_vehicle" EntitySet="tb_vehicle" />
+            <End Role="tb_booking" EntitySet="tb_booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_booking_tb_user1" Association="Self.FK_tb_booking_tb_user1">
+            <End Role="tb_user" EntitySet="tb_user" />
+            <End Role="tb_booking" EntitySet="tb_booking" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_cbsModelStoreContainer" CdmEntityContainer="db_cbsEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_cbsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_booking">
+            <EntityTypeMapping TypeName="db_cbsModel.tb_booking">
+              <MappingFragment StoreEntitySet="tb_booking">
+                <ScalarProperty Name="b_id" ColumnName="b_id" />
+                <ScalarProperty Name="b_bdate" ColumnName="b_bdate" />
+                <ScalarProperty Name="b_rdate" ColumnName="b_rdate" />
+                <ScalarProperty Name="b_total" ColumnName="b_total" />
+                <ScalarProperty Name="b_status" ColumnName="b_status" />
+                <ScalarProperty Name="b_customer" ColumnName="b_customer" />
+                <ScalarProperty Name="b_vehicle" ColumnName="b_vehicle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_user">
+            <EntityTypeMapping TypeName="db_cbsModel.tb_user">
+              <MappingFragment StoreEntitySet="tb_user">
+                <ScalarProperty Name="u_ic" ColumnName="u_ic" />
+                <ScalarProperty Name="u_pass" ColumnName="u_pass" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_address" ColumnName="u_address" />
+                <ScalarProperty Name="u_phone" ColumnName="u_phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_vehicle">
+            <EntityTypeMapping TypeName="db_cbsModel.tb_vehicle">
+              <MappingFragment StoreEntitySet="tb_vehicle">
+                <ScalarProperty Name="v_reg" ColumnName="v_reg" />
+                <ScalarProperty Name="v_model" ColumnName="v_model" />
+                <ScalarProperty Name="v_type" ColumnName="v_type" />
+                <ScalarProperty Name="v_seat" ColumnName="v_seat" />
+                <ScalarProperty Name="v_price" ColumnName="v_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_state">
+            <EntityTypeMapping TypeName="db_cbsModel.tb_state">
+              <MappingFragment StoreEntitySet="tb_state">
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

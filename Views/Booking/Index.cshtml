@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Assignment_3_ASP.NET_MVC_CRUD.Models.tb_booking>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.b_bdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.b_rdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.b_total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.b_status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tb_vehicle.v_model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tb_user.u_pass)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.b_bdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.b_rdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.b_total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.b_status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tb_vehicle.v_model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tb_user.u_pass)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.b_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.b_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.b_id })
+        </td>
+    </tr>
+}
+
+</table>
