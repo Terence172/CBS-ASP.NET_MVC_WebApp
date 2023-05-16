@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Car Booking System</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -28,7 +28,7 @@
                     
                     @if (Session["UserIC"] != null)
                     {
-                        <h5 style="color:white"> Hello @Session["UserName"]   </h5>
+                        <h5 style="color:white"> Hello @Session["UserName"] &nbsp;  </h5>
                         
                         @Html.ActionLink("Log Out", "Logout", "Login")
                     }
@@ -48,7 +48,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Today.Kind - My ASP.NET Application</p>
         </footer>
     </div>
 
